@@ -1,13 +1,9 @@
 <?xml version="1.0" ?>
 <robot name="xhum_v201">
    <!--Auto generated from output.xml-->
-   <link name="world">
-      <inertial>
-         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-         <mass value="1e-06"/>
-         <inertia ixx="1e-09" iyy="1e-09" izz="1e-09" ixy="0.0" ixz="0.0" iyz="0.0"/>
-      </inertial>
-   </link>
+   <!-- NOTE: removed 'world' link + 'floating_humanoid' floating joint so that
+        'humanoid' is the root link (IsaacLab/IsaacSim adds the floating base itself,
+        matching the G1 convention). -->
    <link name="humanoid">
       <inertial>
          <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -15,11 +11,6 @@
          <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
       </inertial>
    </link>
-   <joint type="floating" name="floating_humanoid">
-      <parent link="world"/>
-      <child link="humanoid"/>
-      <origin xyz="0.0 0.0 0.82515" rpy="0.0 0.0 1.5707963267948966"/>
-   </joint>
    <link name="waist_bridge_2_01">
       <inertial>
          <origin xyz="5.05155e-05 0.0491915 -0.0524963" rpy="0.0 0.0 0.0"/>

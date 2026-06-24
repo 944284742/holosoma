@@ -531,6 +531,12 @@ def create_virtual_gantry(
             continue
 
     available_bodies = getattr(sim, "body_names", "unknown")
-    raise RuntimeError(
-        f"Could not find suitable attachment body from {attachment_body_names}. Available bodies: {available_bodies}"
-    )
+    if enable:
+        raise RuntimeError(
+            f"Could not find suitable attachment body from {attachment_body_names}. Available bodies: {available_bodies}"
+        )
+    # Gantry disabled: it never uses body_link_id (force methods early-return when
+    # disabled), so don't fail when no attachment body matches. Return a no-op gantry
+    # so robots whose body names aren't in attachment_body_names can still train.
+    logger.info("Virtual gantry disabled and no attachment body matched; returning no-op gantry.")
+    return VirtualGantry(sim=sim, enable=False, body_link_id=0, cfg=cfg, **kwargs)
