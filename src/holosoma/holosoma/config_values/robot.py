@@ -1432,7 +1432,10 @@ xhum_v2_31dof = RobotConfig(
     ],
     body_names=[
         "humanoid",
-        "waist_bridge_2_01",
+        # NOTE: waist_bridge_2_01 is a fixed-joint link that the IsaacSim URDF
+        # importer collapses into the "humanoid" root body (collapse_fixed_joints),
+        # so it does not exist as a separate rigid body. Listing it here would make
+        # Articulation.find_bodies() raise "Not all regular expressions are matched".
         "hiproll_motor_l",
         "hip_yaw_left",
         "left_knee",
@@ -1506,7 +1509,7 @@ xhum_v2_31dof = RobotConfig(
             "head_pitch": 0.0,
         },
     ),
-    randomize_link_body_names=["waist_bridge_2_01", "hiproll_motor_l", "hip_yaw_left", "left_knee", "calf", "hiproll_motor_r", "hip_yaw_left_2", "right_knee", "right_calf"],
+    randomize_link_body_names=["hiproll_motor_l", "hip_yaw_left", "left_knee", "calf", "hiproll_motor_r", "hip_yaw_left_2", "right_knee", "right_calf"],
     waist_dof_names=["waist_yaw", "waist_roll", "waist_pitch"],
     waist_yaw_dof_name="waist_yaw",
     waist_roll_dof_name="waist_roll",
