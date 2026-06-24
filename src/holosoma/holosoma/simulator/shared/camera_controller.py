@@ -264,11 +264,19 @@ class CameraController:
         # Get tracking_body_name from config (with fallback for configs without this field)
         tracking_body_name = getattr(self.config, "tracking_body_name", "auto")
 
-        # Build list of names to try: explicit name first (if set), then defaults
+        # Build list of names to try: explicit name first (if set), then the robot's
+        # declared torso/foot body (robot-specific — avoids hardcoded-name assumptions for
+        # robots whose body names don't follow the conventional list), then generic defaults.
+        names_to_try: list[str] = []
         if tracking_body_name and tracking_body_name != "auto":
-            names_to_try = [tracking_body_name] + self.DEFAULT_TRACKING_BODY_NAMES
-        else:
-            names_to_try = self.DEFAULT_TRACKING_BODY_NAMES
+            names_to_try.append(tracking_body_name)
+        robot_cfg = getattr(self.simulator, "robot_config", None)
+        if robot_cfg is not None:
+            for attr in ("torso_name", "foot_body_name"):
+                nm = getattr(robot_cfg, attr, None)
+                if nm and nm not in names_to_try:
+                    names_to_try.append(nm)
+        names_to_try += [n for n in self.DEFAULT_TRACKING_BODY_NAMES if n not in names_to_try]
 
         # Try each name in order until one works
         for name in names_to_try:
