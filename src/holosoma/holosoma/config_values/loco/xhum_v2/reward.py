@@ -1,4 +1,8 @@
-"""Locomotion reward presets for the xhum_v2 robot."""
+"""Locomotion reward presets for the xhum_v2 robot.
+
+pose_weights 按 xhum_v2 dof_names 顺序(腿L6,腿R6,腰3,臂L7,臂R7,头2 = 31):
+腿部低权重允许摆动 [0.01,1,5,0.01,5,5];上身(腰/臂/头)高权重 50 维持默认姿态。
+"""
 
 from holosoma.config_types.reward import RewardManagerCfg, RewardTermCfg
 
@@ -17,26 +21,19 @@ xhum_v2_31dof_loco = RewardManagerCfg(
         ),
         "penalty_ang_vel_xy": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_ang_vel_xy",
-            weight=-1.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-1.0, params={}, tags=["penalty_curriculum"],
         ),
         "penalty_orientation": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_orientation",
-            weight=-10.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-10.0, params={}, tags=["penalty_curriculum"],
         ),
         "penalty_action_rate": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_action_rate",
-            weight=-2.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-2.0, params={}, tags=["penalty_curriculum"],
         ),
         "feet_phase": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:feet_phase",
-            weight=5.0,
-            params={"swing_height": 0.09, "tracking_sigma": 0.008},
+            weight=5.0, params={"swing_height": 0.09, "tracking_sigma": 0.008},
         ),
         "pose": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:pose",
@@ -72,26 +69,23 @@ xhum_v2_31dof_loco = RewardManagerCfg(
                     50.0,
                     50.0,
                     50.0,
+                    50.0,
+                    50.0,
                 ],
             },
             tags=["penalty_curriculum"],
         ),
         "penalty_close_feet_xy": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_close_feet_xy",
-            weight=-10.0,
-            params={"close_feet_threshold": 0.15},
-            tags=["penalty_curriculum"],
+            weight=-10.0, params={"close_feet_threshold": 0.15}, tags=["penalty_curriculum"],
         ),
         "penalty_feet_ori": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_feet_ori",
-            weight=-5.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-5.0, params={}, tags=["penalty_curriculum"],
         ),
         "alive": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:alive",
-            weight=1.0,
-            params={},
+            weight=1.0, params={},
         ),
     },
 )
@@ -111,26 +105,19 @@ xhum_v2_31dof_loco_fast_sac = RewardManagerCfg(
         ),
         "penalty_ang_vel_xy": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_ang_vel_xy",
-            weight=-1.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-1.0, params={}, tags=["penalty_curriculum"],
         ),
         "penalty_orientation": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_orientation",
-            weight=-10.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-10.0, params={}, tags=["penalty_curriculum"],
         ),
         "penalty_action_rate": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_action_rate",
-            weight=-2.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-2.0, params={}, tags=["penalty_curriculum"],
         ),
         "feet_phase": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:feet_phase",
-            weight=5.0,
-            params={"swing_height": 0.09, "tracking_sigma": 0.008},
+            weight=5.0, params={"swing_height": 0.09, "tracking_sigma": 0.008},
         ),
         "pose": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:pose",
@@ -166,26 +153,23 @@ xhum_v2_31dof_loco_fast_sac = RewardManagerCfg(
                     50.0,
                     50.0,
                     50.0,
+                    50.0,
+                    50.0,
                 ],
             },
             tags=["penalty_curriculum"],
         ),
         "penalty_close_feet_xy": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_close_feet_xy",
-            weight=-10.0,
-            params={"close_feet_threshold": 0.15},
-            tags=["penalty_curriculum"],
+            weight=-10.0, params={"close_feet_threshold": 0.15}, tags=["penalty_curriculum"],
         ),
         "penalty_feet_ori": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:penalty_feet_ori",
-            weight=-5.0,
-            params={},
-            tags=["penalty_curriculum"],
+            weight=-5.0, params={}, tags=["penalty_curriculum"],
         ),
         "alive": RewardTermCfg(
             func="holosoma.managers.reward.terms.locomotion:alive",
-            weight=10.0,
-            params={},
+            weight=10.0, params={},
         ),
     },
 )

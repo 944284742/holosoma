@@ -1,4 +1,4 @@
-"""Locomotion presets for xhum_v2 robot."""
+"""Locomotion presets for xdof xhum_v2 (31 DOF) robot."""
 
 from __future__ import annotations
 
