@@ -924,29 +924,47 @@ class IsaacSim(BaseSimulator):
                             self.commands[:, 1] += 0.1
                             logger.info(f"Current Command: {self.commands[:,]}")
                         elif command == "heading_left_command":
-                            self.commands[:, 3] -= 0.1
+                            # 宽命令(>3维)用 heading(idx3);窄命令(3维 locomotion)用 ang_vel_yaw(idx2)
+                            yaw_idx = 3 if self.commands.shape[1] > 3 else 2
+                            self.commands[:, yaw_idx] -= 0.1
                             logger.info(f"Current Command: {self.commands[:,]}")
                         elif command == "heading_right_command":
-                            self.commands[:, 3] += 0.1
+                            yaw_idx = 3 if self.commands.shape[1] > 3 else 2
+                            self.commands[:, yaw_idx] += 0.1
                             logger.info(f"Current Command: {self.commands[:,]}")
                         elif command == "zero_command":
-                            self.commands[:, :4] = 0
+                            self.commands[:, : min(4, self.commands.shape[1])] = 0
                             logger.info(f"Current Command: {self.commands[:,]}")
                         elif command == "walk_stand_toggle":
-                            self.commands[:, 4] = 1 - self.commands[:, 4]
-                            logger.info(f"Current Command: {self.commands[:,]}")
+                            if self.commands.shape[1] > 4:
+                                self.commands[:, 4] = 1 - self.commands[:, 4]
+                                logger.info(f"Current Command: {self.commands[:,]}")
+                            else:
+                                logger.warning("walk/stand toggle 不适用于当前命令布局(无第4通道)")
                         elif command == "height_up":
-                            self.commands[:, 8] += 0.1
-                            logger.info(f"Current Command: {self.commands[:,]}")
+                            if self.commands.shape[1] > 8:
+                                self.commands[:, 8] += 0.1
+                                logger.info(f"Current Command: {self.commands[:,]}")
+                            else:
+                                logger.warning("height 控制不适用于当前命令布局(无第8通道)")
                         elif command == "height_down":
-                            self.commands[:, 8] -= 0.1
-                            logger.info(f"Current Command: {self.commands[:,]}")
+                            if self.commands.shape[1] > 8:
+                                self.commands[:, 8] -= 0.1
+                                logger.info(f"Current Command: {self.commands[:,]}")
+                            else:
+                                logger.warning("height 控制不适用于当前命令布局(无第8通道)")
                         elif command == "waist_yaw_up":
-                            self.commands[:, 5] += 0.1
-                            logger.info(f"Current Command: {self.commands[:,]}")
+                            if self.commands.shape[1] > 5:
+                                self.commands[:, 5] += 0.1
+                                logger.info(f"Current Command: {self.commands[:,]}")
+                            else:
+                                logger.warning("waist_yaw 控制不适用于当前命令布局(无第5通道)")
                         elif command == "waist_yaw_down":
-                            self.commands[:, 5] -= 0.1
-                            logger.info(f"Current Command: {self.commands[:,]}")
+                            if self.commands.shape[1] > 5:
+                                self.commands[:, 5] -= 0.1
+                                logger.info(f"Current Command: {self.commands[:,]}")
+                            else:
+                                logger.warning("waist_yaw 控制不适用于当前命令布局(无第5通道)")
                         elif command == "push_robots":
                             logger.info("Push Robots Requested")
                             self.push_requested = True
