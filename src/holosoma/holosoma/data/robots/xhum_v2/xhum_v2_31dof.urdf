@@ -933,8 +933,9 @@
       <axis xyz="0.0 0.0 1.0"/>
       <limit lower="-0.785398" upper="0.785398" effort="30" velocity="21"/>
    </joint>
-   <!-- 足底接触点(贴鞋底中心,默认平脚时朝向对齐世界竖直):修复 feet_phase 测高偏置 & feet_ori 非语义帧。
-        放在 foot_2/foot(ankle_pitch+ankle_roll 之下的最末端脚连杆)上,随双踝一起运动。 -->
+   <!-- Foot contact points (at sole center, oriented world-up at the default flat-foot pose):
+        fix feet_phase height bias & feet_ori non-semantic frame. Attached to foot_2/foot
+        (the most distal foot link, below both ankle_pitch and ankle_roll) so they track both ankle joints. -->
    <link name="left_foot_contact_point">
       <inertial>
          <mass value="0.001"/>

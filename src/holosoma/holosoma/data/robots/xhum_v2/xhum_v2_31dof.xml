@@ -101,6 +101,10 @@
                     <inertial pos="-0.0446805 6.4e-11 0.0112035" quat="0.707094 0.0041828 0.0041828 0.707094" mass="0.778414" diaginertia="0.00327916 0.00327425 0.000667866"/>
                     <joint name="left_ankle_roll" class="HEJ50" pos="0 0 0" axis="0 0 -1" range="-0.261799 0.261799"/>
                     <geom class="visual" pos="-0.0446805 6.4e-11 0.0112035" quat="0.5 0.5 0.5 0.5" mesh="foot_visual"/>
+                    <!-- Foot contact point (synced with URDF): at sole, oriented world-up at default flat foot; used by feet_phase/feet_ori -->
+                    <body name="left_foot_contact_point" pos="-0.06441 0.00007 0.00539" quat="0.55092 0.45725 0.51996 0.46588">
+                      <inertial pos="0 0 0" mass="0.001" diaginertia="1e-6 1e-6 1e-6"/>
+                    </body>
                     <geom class="collision" size="0.026 0.006" pos="-0.06021 -0.01652 -0.08681" quat="0.706916 -0.00178946 0.707295 0" type="cylinder"/>
                     <geom class="collision" size="0.026 0.006" pos="-0.0603 0.01656 -0.08678" quat="0.706916 -0.00178946 0.707295 0" type="cylinder"/>
                     <geom class="collision" size="0.026 0.006" pos="-0.06016 -0.0166 0.00496" quat="0.706916 -0.00178946 0.707295 0" type="cylinder"/>
@@ -142,6 +146,10 @@
                     <inertial pos="-0.0446805 6.4e-11 0.0112035" quat="0.707094 0.0041828 0.0041828 0.707094" mass="0.778414" diaginertia="0.00327916 0.00327425 0.000667866"/>
                     <joint name="right_ankle_roll" class="HEJ50" pos="0 0 0" axis="0 0 -1" range="-0.261799 0.261799"/>
                     <geom class="visual" pos="-0.0446805 6.4e-11 0.0112035" quat="0.5 0.5 0.5 0.5" mesh="foot_2_visual"/>
+                    <!-- Foot contact point (synced with URDF): at sole, oriented world-up at default flat foot; used by feet_phase/feet_ori -->
+                    <body name="right_foot_contact_point" pos="-0.06432 -0.00018 0.00540" quat="0.46588 0.51996 0.45725 0.55093">
+                      <inertial pos="0 0 0" mass="0.001" diaginertia="1e-6 1e-6 1e-6"/>
+                    </body>
                     <geom class="collision" size="0.026 0.006" pos="-0.06021 -0.01652 -0.08681" quat="0.706916 -0.00178946 0.707295 0" type="cylinder"/>
                     <geom class="collision" size="0.026 0.006" pos="-0.0603 0.01656 -0.08678" quat="0.706916 -0.00178946 0.707295 0" type="cylinder"/>
                     <geom class="collision" size="0.026 0.006" pos="-0.06016 -0.0166 0.00496" quat="0.706916 -0.00178946 0.707295 0" type="cylinder"/>
