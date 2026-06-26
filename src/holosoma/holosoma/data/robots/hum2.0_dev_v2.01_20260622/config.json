@@ -1,0 +1,9 @@
+{
+    "url": "https://cad.onshape.com/documents/918469f469725aa4c3a6cab0/w/1bce28c50de645e132ddd863/e/f123e8bc52c8a2b39315788e",
+    "outputFormat": "mujoco",
+    "noDynamics": false,
+    "merge_stls": "all",
+    "simplify_stls": true,
+    "max_stl_size": 0.5,
+    "robot_name": "xhumanoid_v201"
+}
