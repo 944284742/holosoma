@@ -88,7 +88,7 @@
       <child link="hip_yaw_left"/>
       <origin xyz="-0.0547845 0.0512656 -0.078" rpy="-2.9670597689824123 -1.5707963267948966 0.0"/>
       <axis xyz="0.0 0.0 -1.0"/>
-      <limit lower="-1.0472" upper="1.29154" effort="62" velocity="17.8"/>
+      <limit lower="-1.0472" upper="1.29154" effort="140" velocity="10.4"/>
    </joint>
    <link name="left_knee">
       <inertial>
@@ -115,7 +115,7 @@
       <child link="left_knee"/>
       <origin xyz="-0.0455 -0.0788083 0.04505" rpy="-1.5707963267948966 0.0 -0.5235993718135523"/>
       <axis xyz="0.0 0.0 1.0"/>
-      <limit lower="-2.53073" upper="2.53073" effort="140" velocity="10.4"/>
+      <limit lower="-2.53073" upper="2.53073" effort="62" velocity="17.8"/>
    </joint>
    <link name="calf">
       <inertial>
@@ -280,7 +280,7 @@
       <child link="hip_yaw_left_2"/>
       <origin xyz="-0.0339467 -0.0669113 -0.078" rpy="-0.17453288460738095 1.5707963267948966 0.0"/>
       <axis xyz="0.0 0.0 -1.0"/>
-      <limit lower="-1.29154" upper="1.0472" effort="62" velocity="17.8"/>
+      <limit lower="-1.29154" upper="1.0472" effort="140" velocity="10.4"/>
    </joint>
    <link name="right_knee">
       <inertial>
@@ -307,7 +307,7 @@
       <child link="right_knee"/>
       <origin xyz="0.0455 -0.0788083 0.04505" rpy="1.5707963267948966 0.0 -2.617993281776241"/>
       <axis xyz="0.0 0.0 1.0"/>
-      <limit lower="-2.53073" upper="2.53073" effort="140" velocity="10.4"/>
+      <limit lower="-2.53073" upper="2.53073" effort="62" velocity="17.8"/>
    </joint>
    <link name="right_calf">
       <inertial>
@@ -553,7 +553,7 @@
       <child link="arm_j3_2"/>
       <origin xyz="0.0165606 0.03995 -0.076" rpy="-1.5707963267948966 -1.2217309121094393 3.141592653589793"/>
       <axis xyz="0.0 0.0 -1.0"/>
-      <limit lower="-0.261799" upper="3.61283" effort="30" velocity="21"/>
+      <limit lower="-0.261799" upper="3.61283" effort="62" velocity="17.8"/>
    </joint>
    <link name="arm_j4_l">
       <inertial>
@@ -742,7 +742,7 @@
       <child link="arm_j3"/>
       <origin xyz="0.03995 0.0165606 -0.076" rpy="-1.5707963267948966 1.2217298123263816 1.5707963267948966"/>
       <axis xyz="0.0 0.0 -1.0"/>
-      <limit lower="-3.61283" upper="0.261799" effort="30" velocity="21"/>
+      <limit lower="-3.61283" upper="0.261799" effort="62" velocity="17.8"/>
    </joint>
    <link name="arm_j4">
       <inertial>
