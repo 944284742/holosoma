@@ -226,7 +226,7 @@
          </geometry>
       </collision>
    </link>
-   <joint type="fixed" name="left_ankle_roll_link2left_foot_fixed">
+   <joint type="fixed" name="left_ankle_roll_link2left_foot_fixed" dont_collapse="true">
       <parent link="left_ankle_roll_link" />
       <child link="left_foot" />
       <origin xyz="-0.058 0.0 0.0" rpy="-0.0 1.5707963267948966 0.0" />
@@ -424,7 +424,7 @@
          </geometry>
       </collision>
    </link>
-   <joint type="fixed" name="right_ankle_roll_link2right_foot_fixed">
+   <joint type="fixed" name="right_ankle_roll_link2right_foot_fixed" dont_collapse="true">
       <parent link="right_ankle_roll_link" />
       <child link="right_foot" />
       <origin xyz="-0.058 0.0 0.0" rpy="-0.0 1.5707963267948966 0.0" />
