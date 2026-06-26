@@ -1671,7 +1671,11 @@ xhum_v2_31dof = RobotConfig(
         fix_base_link=False,
     ),
     bridge=RobotBridgeConfig(
-        sdk_type="unitree",  # TODO: xdof 真机 SDK 待定(仅 sim2sim run_sim 用,训练不依赖)
+        sdk_type="xdof-v2",  # sim2sim: load xdof_sim2sim_bridge.XdofV2SDKBridge (serial ankle, 1:1); training does not use this
         motor_type="serial",
     ),
 )
+
+# Register xhum_v2 into the run_sim robot table.  Appended here (not in the
+# DEFAULTS literal above) because xhum_v2_31dof is defined after that dict.
+DEFAULTS["xhum_v2_31dof"] = xhum_v2_31dof
