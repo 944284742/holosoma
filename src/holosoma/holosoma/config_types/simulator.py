@@ -551,6 +551,10 @@ class SimulatorInitConfig:
     virtual_gantry: VirtualGantryCfg = field(default_factory=VirtualGantryCfg)
     """Virtual gantry system configuration."""
 
+    fix_base: bool = False
+    """Rigidly fix the robot base in place by clamping the root freejoint each step
+    (MuJoCo CLASSIC backend). For module testing; default False."""
+
 
 @dataclass(frozen=True)
 class SimulatorConfig:

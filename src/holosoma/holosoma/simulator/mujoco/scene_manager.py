@@ -38,6 +38,7 @@ class MujocoSceneManager:
         """
         self.world_spec = mujoco.MjSpec()
         self.world_spec.copy_during_attach = True
+        self.simulator_config = simulator_config
         self._setup_world_options(simulator_config)
         self.robot_config: RobotConfig | None = None  # Set when adding robot
 
@@ -491,5 +492,26 @@ class MujocoSceneManager:
         mujoco.MjModel
             Compiled MuJoCo model ready for simulation.
         """
+        # fix_base: weld the robot's floating base to the world (rigid, solver-held).
+        # Added INACTIVE here; the relpose is set + activated at runtime once the base is
+        # placed (see MujocoSimulator._activate_fix_base_weld). Keeps the freejoint so the
+        # framework's base-state addressing still works.
+        if self.simulator_config.fix_base:
+            base_body = next(
+                (b.name for b in self.world_spec.bodies for j in b.joints if j.type == mujoco.mjtJoint.mjJNT_FREE),
+                None,
+            )
+            if base_body is not None:
+                eq = self.world_spec.add_equality()
+                eq.name = "fix_base_weld"
+                eq.type = mujoco.mjtEq.mjEQ_WELD
+                eq.objtype = mujoco.mjtObj.mjOBJ_BODY
+                eq.name1 = base_body
+                eq.name2 = ""  # world
+                eq.active = False
+                logger.info(f"fix_base: added inactive weld 'fix_base_weld' on body '{base_body}'")
+            else:
+                logger.warning("fix_base requested but no free joint found; base not welded")
+
         logger.info("Compiling world model using MjSpec")
         return self.world_spec.compile()

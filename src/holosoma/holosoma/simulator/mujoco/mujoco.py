@@ -889,8 +889,36 @@ class MuJoCo(BaseSimulator):
         if self.virtual_gantry:
             self.virtual_gantry.draw_debug()
 
+    def _activate_fix_base_weld(self) -> None:
+        """fix_base: pin the base by activating the 'fix_base_weld' equality at the base's
+        current (spawn) pose. One-time — the constraint solver holds it afterwards."""
+        eq_id = mujoco.mj_name2id(self.root_model, mujoco.mjtObj.mjOBJ_EQUALITY, "fix_base_weld")
+        if eq_id < 0:
+            logger.warning("fix_base requested but weld 'fix_base_weld' not found in model")
+            return
+        qa = self.robot_qpos_addr
+        base_pos = self.root_data.qpos[qa : qa + 3].copy()
+        base_quat = self.root_data.qpos[qa + 3 : qa + 7].copy()
+        # weld relpose = pose of world (body2) in the base (body1) frame = inverse(base pose)
+        rel_pos, rel_quat = np.zeros(3), np.zeros(4)
+        mujoco.mju_negPose(rel_pos, rel_quat, base_pos, base_quat)
+        self.root_model.eq_data[eq_id, 0:3] = 0.0
+        self.root_model.eq_data[eq_id, 3:6] = rel_pos
+        self.root_model.eq_data[eq_id, 6:10] = rel_quat
+        self.root_model.eq_data[eq_id, 10] = 1.0
+        self.root_model.eq_active0[eq_id] = 1
+        self.root_data.eq_active[eq_id] = 1
+        mujoco.mj_forward(self.root_model, self.root_data)
+        logger.info(f"fix_base: welded base in place at pos={base_pos}")
+
     def simulate_at_each_physics_step(self) -> None:
         """Advance simulation by one step."""
+
+        # One-time (fix_base): once the base is placed, weld it in place at its current
+        # pose; the constraint solver then holds it permanently (no per-step work).
+        if self.simulator_config.fix_base and not getattr(self, "_fix_base_done", False):
+            self._activate_fix_base_weld()
+            self._fix_base_done = True
 
         if self.virtual_gantry:
             # Apply virtual gantry forces before step
