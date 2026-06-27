@@ -48,7 +48,7 @@ xhum_v2_31dof = ExperimentConfig(
 xhum_v2_31dof_fast_sac = ExperimentConfig(
     env_class="holosoma.envs.locomotion.locomotion_manager.LeggedRobotLocomotionManager",
     training=TrainingConfig(project="hv-xhum_v2-manager", name="xhum_v2_31dof_fast_sac_manager"),
-    algo=replace(algo.fast_sac, config=replace(algo.fast_sac.config, num_learning_iterations=50000, use_symmetry=False)),
+    algo=replace(algo.fast_sac, config=replace(algo.fast_sac.config, num_learning_iterations=50000, use_symmetry=True)),
     simulator=simulator.isaacsim,
     robot=robot.xhum_v2_31dof,
     terrain=terrain.terrain_locomotion_plane,
