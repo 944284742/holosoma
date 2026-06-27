@@ -12,10 +12,12 @@
       <default class="collision">
         <geom type="capsule" group="3" />
         <default class="foot_sphere">
-          <geom size="0.008 0 0" type="sphere" contype="2" />
+          <geom size="0.008 0 0" type="sphere" contype="1" />
         </default>
         <default class="foot_capsule">
-          <geom size="0.01 0 0" contype="2" />
+          <!-- contype=1 (robot class) so the sim promotes it to (1,2) and feet collide
+               with the floor (2,1); contype=2 matched the floor mask and disabled foot contact. -->
+          <geom size="0.01 0 0" contype="1" />
         </default>
       </default>
       <default class="HEJ50">
