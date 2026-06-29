@@ -6,7 +6,7 @@ Core training framework for humanoid robot reinforcement learning with support f
 |-------------|----------------------|
 | **Simulators** | IsaacGym, IsaacSim, MJWarp (training) \| Mujoco (evaluation) |
 | **Algorithms** | PPO, FastSAC |
-| **Robots** | Unitree G1, Booster T1 |
+| **Robots** | Unitree G1, Booster T1, xdof xhum_v2 (31-DOF) |
 
 ## Training
 
@@ -34,6 +34,15 @@ python src/holosoma/holosoma/train_agent.py \
     simulator:isaacsim \
     logger:wandb \
     --training.seed 1
+
+# xdof xhum_v2 with FastSAC on IsaacSim
+source scripts/source_isaacsim_setup.sh
+python src/holosoma/holosoma/train_agent.py \
+    exp:xhum-v2-31dof-fast-sac \
+    simulator:isaacsim \
+    logger:wandb \
+    --training.seed 1 \
+    --training.num_envs 4096
 ```
 
 Once checkpoints are saved, you can evaluate policies using [In-Training Evaluation](#in-training-evaluation) (same simulator as training) or cross-simulator evaluation in MuJoCo (see [holosoma_inference](../holosoma_inference/README.md)).
