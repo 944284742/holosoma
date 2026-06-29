@@ -18,6 +18,11 @@ if [[ ! -d "$VENV_DIR" ]]; then
     return 1 2>/dev/null || exit 1
 fi
 
+# Clear any inherited PYTHONPATH (e.g. Isaac Sim's py3.11 pip_prebundle dirs from a
+# globally-sourced isaaclab/isaacsim setup) so they don't shadow this py3.12 venv.
+# ROS (sourced below) re-adds only its own compatible site-packages.
+unset PYTHONPATH
+
 # Source ROS2 if available (before venv activation so venv packages take priority)
 if [[ -f /opt/ros/jazzy/setup.bash ]]; then
     source /opt/ros/jazzy/setup.bash
@@ -34,6 +39,16 @@ case ":$PATH:" in
     *":$VENV_DIR/bin:"*) ;;
     *) export PATH="$VENV_DIR/bin:$PATH" ;;
 esac
+
+# The unitree_sdk2 wheel bundles its own CycloneDDS (libddsc.so.0). When ROS2 is
+# sourced above, /opt/ros/<distro>/lib lands on LD_LIBRARY_PATH with a conflicting
+# DDS/runtime, and the robot bridge crashes with "free(): invalid pointer" at DDS
+# init. Prepend the bundled lib dir so unitree's DDS wins the ABI.
+_UNITREE_LIB=$(echo "$VENV_DIR"/lib/python*/site-packages/unitree_interface)
+if [[ -d "$_UNITREE_LIB" ]]; then
+    export LD_LIBRARY_PATH="$_UNITREE_LIB:${LD_LIBRARY_PATH}"
+fi
+unset _UNITREE_LIB
 
 # Validate environment
 if python -c "import mujoco" 2>/dev/null; then
